@@ -5,13 +5,27 @@ Game::Game() : mWindow(sf::VideoMode(640, 480), "SFML Application"), mPlayer()
 	mPlayer.setRadius(40.f);
 	mPlayer.setPosition(100.f, 100.f);
 	mPlayer.setFillColor(sf::Color::Cyan);
+	mIsMovingUp = 0;
+	mIsMovingDown = 0;
+	mIsMovingRight = 0;
+	mIsMovingLeft = 0;
+	PlayerSpeed=0.5;
+	TimePerFrame = sf::seconds(1.f / 60.f);
 }
 void Game::run()
 {
+	sf::Clock clock;
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	while (mWindow.isOpen())
 	{
 		processEvents();
-		update();
+		timeSinceLastUpdate += clock.restart();
+		while (timeSinceLastUpdate > TimePerFrame)
+		{
+			timeSinceLastUpdate -= TimePerFrame;
+			processEvents();
+			update(TimePerFrame);
+		}
 		render();
 	}
 }
@@ -32,18 +46,18 @@ void Game::processEvents()
 			break;
 		}
 }
-void Game::update()
+void Game::update(sf::Time deltaTime)
 {
 	sf::Vector2f movement(0.f, 0.f);
 	if (mIsMovingUp)
-		movement.y -= 1.f;
+		movement.y -= PlayerSpeed;
 	if (mIsMovingDown)
-		movement.y += 1.f;
+		movement.y += PlayerSpeed;
 	if (mIsMovingLeft)
-		movement.x -= 1.f;
+		movement.x -= PlayerSpeed;
 	if (mIsMovingRight)
-		movement.x += 1.f;
-	mPlayer.move(movement);
+		movement.x += PlayerSpeed;
+	mPlayer.move(movement * deltaTime.asSeconds());
 }
 void Game::render()
 {
