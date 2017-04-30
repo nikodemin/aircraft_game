@@ -1,6 +1,3 @@
 ﻿  Game.cpp
-c:\onedrive\visual studio\visual studio 2017\aircraft_game\aircraft_game\game.cpp(23): error C2678: бинарный ">": не найден оператор, принимающий левый операнд типа "sf::Time" (или приемлемое преобразование отсутствует)
-  c:\onedrive\opengl\sfml\include\sfml\system\time.hpp(197): note: может быть "bool sf::operator >(sf::Time,sf::Time)" [найдено при поиске с зависимостью от аргументов]
-  c:\onedrive\opengl\sfml\include\sfml\system\string.hpp(576): note: или       "bool sf::operator >(const sf::String &,const sf::String &)" [найдено при поиске с зависимостью от аргументов]
-  c:\onedrive\opengl\sfml\include\sfml\window\videomode.hpp(153): note: или       "bool sf::operator >(const sf::VideoMode &,const sf::VideoMode &)" [найдено при поиске с зависимостью от аргументов]
-  c:\onedrive\visual studio\visual studio 2017\aircraft_game\aircraft_game\game.cpp(23): note: при попытке сопоставить список аргументов "(sf::Time, int)"
+  Aircraft_game.vcxproj -> C:\OneDrive\Visual studio\Visual studio 2017\Aircraft_game\x64\Debug\Aircraft_game.exe
+  Aircraft_game.vcxproj -> C:\OneDrive\Visual studio\Visual studio 2017\Aircraft_game\x64\Debug\Aircraft_game.pdb (Partial PDB)

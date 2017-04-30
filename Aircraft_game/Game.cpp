@@ -1,16 +1,25 @@
 #include "stdafx.h"
+//#include <Book/StringHelpers.hpp>
 
-Game::Game() : mWindow(sf::VideoMode(640, 480), "SFML Application"), mPlayer()
+Game::Game() : mWindow(sf::VideoMode(640, 480), "SFML Application"), mPlayer(), mFont(), mStatisticsText()
+, mStatisticsUpdateTime(), mStatisticsNumFrames(0), mIsMovingUp(false), mIsMovingDown(false)
+, mIsMovingRight(false) , mIsMovingLeft(false)
 {
-	mPlayer.setRadius(40.f);
-	mPlayer.setPosition(100.f, 100.f);
-	mPlayer.setFillColor(sf::Color::Cyan);
-	mIsMovingUp = 0;
-	mIsMovingDown = 0;
-	mIsMovingRight = 0;
-	mIsMovingLeft = 0;
-	PlayerSpeed=0.5;
+	PlayerSpeed=1000;
 	TimePerFrame = sf::seconds(1.f / 60.f);
+	if (!mTexture.loadFromFile("Media/Textures/Eagle.png"))
+	{
+		mWindow.close();
+		// Handle loading error
+	}
+
+	mPlayer.setTexture(mTexture);
+	mPlayer.setPosition(100.f, 100.f);
+
+	mFont.loadFromFile("Media/Sansation.ttf");
+	mStatisticsText.setFont(mFont);
+	mStatisticsText.setPosition(5.f, 5.f);
+	mStatisticsText.setCharacterSize(10);
 }
 void Game::run()
 {
@@ -18,7 +27,6 @@ void Game::run()
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	while (mWindow.isOpen())
 	{
-		processEvents();
 		timeSinceLastUpdate += clock.restart();
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
@@ -76,3 +84,18 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 	else if (key == sf::Keyboard::D)
 		mIsMovingRight = isPressed;
 }
+/*void Game::updateStatistics(sf::Time elapsedTime)
+{
+	mStatisticsUpdateTime += elapsedTime;
+	mStatisticsNumFrames += 1;
+
+	if (mStatisticsUpdateTime >= sf::seconds(1.0f))
+	{
+		mStatisticsText.setString(
+			"Frames / Second = " + toString(mStatisticsNumFrames) + "\n" +
+			"Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us");
+
+		mStatisticsUpdateTime -= sf::seconds(1.0f);
+		mStatisticsNumFrames = 0;
+	}
+}*/
